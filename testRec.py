@@ -17,8 +17,7 @@ def exithandler():
     
     
 # Activate our transmitter and received
-tx = RFDevice(17)
-tx.enable_tx()
+
 rx = RFDevice(27)
 rx.enable_rx()
 
@@ -46,23 +45,3 @@ def rec(rx):
 # Start receiving thread
 t = threading.Thread(target=rec, args=(rx,), daemon=True)
 t.start()
-
-print("Ready to transmit")
-
-# Remember how the shell was set up so we can reset on exit
-old_settings = termios.tcgetattr(sys.stdin)
-tty.setraw(sys.stdin)
-
-while True:
-
-    # Wait for a keypress
-    char = sys.stdin.read(1)
-
-    # If CTRL-C, shutdown
-    if ord(char) == 3:
-        exithandler()
-    else:
-        # Transmit character
-        tx.tx_code(ord(char))
-
-    time.sleep(0.01)
