@@ -32,7 +32,7 @@ while True:
     # radio.write(sendMessage)   # just write the message to radio
     # print("Sent the message: {}".format(sendMessage))  # print a message after succesfull send
     radio.startListening()        # Start listening the radio
-    radio.write()
+    # radio.write()
     messageRec = ""
     radio.read(messageRec,32)
     # char receivedMessage[32] = {0} ;   // set incmng message for 32 bytes
