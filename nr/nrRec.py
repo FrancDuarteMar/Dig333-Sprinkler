@@ -37,7 +37,7 @@ while True:
     radio.read(messageRec,32)
     # char receivedMessage[32] = {0} ;   // set incmng message for 32 bytes
 
-    print("Message Received: "+ messageRec)
+    print("Message Received: ", messageRec)
     
     while not radio.available(0):
         time.sleep(1/100)
