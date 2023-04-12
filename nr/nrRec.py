@@ -40,13 +40,13 @@ while True:
     radio.read(recv_buffer, radio.getDynamicPayloadSize())
     print ("Received:") ,
     print (recv_buffer)
-    c = c + 1
-    if (c&1) == 0:
-        radio.writeAckPayload(1, akpl_buf, len(akpl_buf))
-        print ("Loaded payload reply:"),
-        print (akpl_buf)
-    else:
-        print ("(No return payload)")
+    # c = c + 1
+    # if (c&1) == 0:
+    #     radio.writeAckPayload(1, akpl_buf, len(akpl_buf))
+    #     print ("Loaded payload reply:"),
+    #     print (akpl_buf)
+    # else:
+    #     print ("(No return payload)")
 
 
 # while True:
