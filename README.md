@@ -400,3 +400,122 @@ Although I did not change anything because I haven't been able to test the curre
 | ```AT+C020``` | "COK+C020" | Changes the channel that is used to transmit.  This is crucial if multiple modules  are in close proximity.  |
 | ```AT+FU3``` | "AT+OK" | Changes the transmission settings to a preset  group. This should not be required unless  you need transmission to be very long with only short messages being set every 1 or 2 seconds at least. |
 
+## The Design
+|![Alt text](images/designs/stranded-wire.jpg) | 
+|:--:| 
+| *Stranded Wires* <br> Stranded wires I added ferrules to |
+
+|![Alt text](images/designs/ferrule-crimping-2.jpg) | 
+|:--:| 
+| *Ferrule Crimping* <br> Ferrules were crimped with a Knipex ferrule crimper. A smaller wire stripper crimper tool probably wouldn't have worked for this  |
+
+|![Alt text](images/designs/ferrule-crimped-2.jpg) | 
+|:--:| 
+| *Finished Ferrule Connector* <br> A finished ferrule connector. I added ferrule connectors to all the stranded wires so they could be connected to breadboards or terminal connectors. Stranded wires are okay to be used on Wago 221 connectors without a ferrule so they did not have one if they were used like that.  |
+
+
+| ![Banana Plugs](images/designs/banana-plug-2.jpg)| 
+|:--:| 
+| *Banana Plugs Wiring* <br> They are needed to be connected to the alligator clips. These are screw-in allowing for easy repair and you can use them with any Alligator clips |
+
+|![Alt text](images/designs/banana-plug-finished.jpg) | 
+|:--:| 
+| *Finished Banana Plug* <br> The banana plug will look like the following. It just needs to be plugged into the alligator clips. These are 2mm sockets |
+
+
+
+
+
+
+
+
+
+
+|![Alt text](images/designs/controller-connector-setup.jpg) | 
+|:--:| 
+| *Controller socket holes* <br> Holes that needed to be made. In the end, I used a drill and a rotary tool to make the holes but something like an oscillating tool would've given better results. |
+
+|![Alt text](images/designs/controller-connectors.jpg) | 
+|:--:| 
+| *Socket Headers* <br> Socket headers were glued with silicone to the outside of the holes made. The common/ground wire was connected between the power and alligator clip harness. The socket headers were put into protoboards and then the wires were connected to the relay boards |
+
+|![Alt text](images/designs/controller-relayboard-wiring-power.jpg) | 
+|:--:| 
+| *Relay Board Power Wiring* <br> The output of relay 1 is connected to NO of the other relays. They are connected using a Wago 221 5 terminal connector |
+
+|![Alt text](images/designs/controller-relayboard-wiring.jpg) | 
+|:--:| 
+| *Relay Board Wiring* <br> The power is shared as described in the circuit section. The color wires are connected to the sockets on the protoboard |
+
+|![Alt text](images/designs/controller-relayboard-wiring-input.jpg) | 
+|:--:| 
+| *Relay Board Connections* |
+
+|![Alt text](images/designs/controller-2803a-wiring-3.jpg) | 
+|:--:| 
+| *2803a Wiring* <br> The Darlington array wired on a mini breadboard with ground shared between all devices and 5v power being shared on the breadboard |
+
+|![Alt text](images/designs/controller-wiring-2.jpg) | 
+|:--:| 
+| *Controller Complete Wiring* <br> The complete wiring for the Arduino and relay board. There was still quite a bit of space inside of this housing so its possible to make it more compact or add additional stations using a larger relay board |
+
+|![Alt text](images/designs/button-progress-2.jpg) | 
+|:--:| 
+| *Remote Buttons* <br> Button holes made on the housing. A few scuffs on the outside but the performance is still great. The hole for the second button was a bit large but it still worked |
+
+|![Alt text](images/designs/button-progress.jpg) | 
+|:--:| 
+| *Remote Buttons Backside* <br> The backside of the buttons on the remote. The blue wires are for the button functions while the black and red are the LED wirings. |
+
+
+
+
+|![Alt text](images/designs/remote-2803a.jpg) | 
+|:--:| 
+| *Remote 2803a Wiring* <br> Wiring for the 2803a and button LEDs. The button LEDs had stranded wires so I added ferrule connectors to plug them into the tiny breadboard |
+
+|![Alt text](images/designs/remote-all-wiring.jpg) | 
+|:--:| 
+|  *Remote Complete Wiring* <br> All of the wiring for the Pico. The HC12 is glued at the top with the antenna probing outside of the box. The grounds and power are all connected  in Wago terminals connectors. The 2803a is set on a tiny breadboard. The fit was very tight but everything fit together|
+
+
+
+
+
+
+
+
+
+
+
+## Finished Products 
+
+| ![Alligator Clips ](images/de/../designs/alligator-clips.jpg) | 
+|:--:| 
+| *Alligator Clips Finished Design* <br> The common/ground alligator clip should've been a black clip but I only had red ones. |
+
+|![Alt text](images/designs/connectors.jpg) | 
+|:--:| 
+| *Finished Connectors* <br> The finished male socket connectors using Phoenix Contact Term Block Plugs 2POS and 4POS Str 3.5MM. |
+
+|![Alt text](images/designs/controller-outside-top.jpg) | 
+|:--:| 
+| *Controller Top View* |
+
+|![Alt text](images/designs/controller-outside.jpg)| 
+|:--:| 
+| *Controller Outside View* <br> Outside view of the controller box. The connectors are on the side of the metal box. |
+
+|![Alt text](images/designs/controller-sockets.jpg) | 
+|:--:| 
+| *Connectors <br>* Connector on the outside with the power and alligator clip harness connected |
+
+
+|![Alt text](images/designs/remote-view-4.jpg) | 
+|:--:| 
+| *Remote Outside View* <br> The outside view of the remote housing. The buttons are on when push in and off when pushed out. There are labels on each button to give the user more information. |
+
+
+| | 
+|:--:| 
+| *HC-12 Controller Side Setup* |
