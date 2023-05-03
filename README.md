@@ -1,4 +1,8 @@
 # Raspberry Pi Sprinkler Remote
+|![Alt text](images/designs/remote-view-4.jpg) | ![Alt text](images/designs/controller-outside.jpg) |
+|:--:| :--:|
+| *Remote* | *Controller*|
+
 ### What? 
 A remote controller used by industry professionals to control sprinkler systems when performing on-site inspections or repairs. There are two separate devices to use. First, the main control box is connected to the existing sprinkler remote box or valve wires. Next, the remote controller is powered and used to send a signal to the main control box. Although not as robust, this is sufficient for most needs. 
 
@@ -333,7 +337,7 @@ while True:
     time.sleep(0.25)
 ```
 
-Finally, the full code for the pico is the following. The code was loaded onto the picos memory and saved as ```main.py``` so that it runs on start up.  
+Finally, the full code for the Pico is the following. The code was loaded onto the Pico's memory and saved as ```main.py``` so that it runs on start up.  
 ```
 from machine import UART
 import time
@@ -516,6 +520,35 @@ Although I did not change anything because I haven't been able to test the curre
 | *Remote Outside View* <br> The outside view of the remote housing. The buttons are on when push in and off when pushed out. There are labels on each button to give the user more information. |
 
 
-| | 
-|:--:| 
-| *HC-12 Controller Side Setup* |
+## Further Goals
+1. The current toggle button is not very robust so improving that system by sending more useful commands from remote to controller will greatly improve user experience
+   
+2. The current system worked through a few walls including an exterior brick and interior cinder-block-like dorm walls so the range seems adequate but further testing is needed. I can improve the range using a better antenna than what is included. Additionally, changing the settings of the HC-12 modules can easily reach 100m and even 1km with enough tuning. This will need to work with the toggle improvements so 1km might not be possible but 500km shouldn't be too difficult.
+    
+
+   
+4. Currently, this works for 3 stations but I would like for it to work with at least 8 or 16, some of the more common sprinkler station numbers. It would be nice to have a modular system as well that would be used depending on the number of stations needed instead of a large product. 
+3. Find a better power source for the SMC because they currently require external power. I would like to add voltage converters that allow everything to run off of one power source. Additionally, the remote controller needs to be smaller and water proof to be more effective.
+## Inspiration
+
+The summer before college, I was helping my uncle use an Irritrol Pro Max remote controller but we encountered many issues. Jokingly, my uncle told me to make him a better one and I wasn't really sure I could but I told him I would try because the way the remote worked didn't seem too complicated. I wasn't able to make anything that summer but when looking for possible projects, I found a project using a Solenoid so I remembered the project that my uncle suggested nearly 4 years ago. I then began searching for an open source alternative but wasn't able to find anything so I decided to learn more about how sprinklers work in order to make my own. The context book from the semester really emphasized learning the basics and finding out how things worked in order to hack them or simply become a better user. As a result, I explored various Raspberry Pi sprinkler ideas so I could learn the best approach to creating my own remote controlled sprinkler controller. Although I haven't tested this on an actual sprinkler system, the makeshift system that I created worked so I can call this project a great success so far! 
+
+## Resources
+
+1. Working with radio transmitters 
+   1. https://www.hackster.io/news/how-to-chat-between-two-raspberry-pis-over-433mhz-radio-9cdaaa1fbd00
+   2. https://magpi.raspberrypi.com/articles/build-433mhz-radio-chat-device
+   3. https://github.com/mrpjevans/rfchat
+   4. https://circuitdigest.com/microcontroller-projects/wireless-rf-communication-between-arduino-and-raspberry-pi-using-nrf24l01
+   5. https://forums.raspberrypi.com/viewtopic.php?t=308804
+   6. https://www.youtube.com/watch?v=vxF1N9asjts
+   7. https://www.youtube.com/watch?v=0zOTvB0T5fY
+   8. https://www.youtube.com/watch?v=awOPJK5He28
+2. Understanding how sprinklers work
+   1. https://rayshobby.net/wordpress/understanding-24vac-sprinkler-valves/
+   2. https://www.hackster.io/Ryan33/raspberry-pi-web-page-based-sprinkler-controller-00d26f
+   3. https://www.instructables.com/Raspberry-Pi-Controlled-Irrigation-System/
+   4. https://github.com/nebhead/irrigator
+   5. https://www.youtube.com/watch?v=3CDXZoabCto
+   6. https://selfhostedhome.com/diy-wifi-sprinkler-controller-using-esp8266-part-1/
+   7. https://forums.raspberrypi.com/viewtopic.php?t=84337
