@@ -1,5 +1,5 @@
 # Raspberry Pi Sprinkler Remote
-|![Alt text](images/designs/remote-view-4.jpg) | ![Alt text](images/designs/controller-outside.jpg) |
+|![Remote Top View](images/designs/remote-view-4.jpg) | ![Controller Side View](images/designs/controller-outside.jpg) |
 |:--:| :--:|
 | *Remote* | *Controller*|
 
@@ -18,18 +18,17 @@ Many of the existing solutions are expensive, locked to a system and quite buggy
 
 
 1. <a href="https://www.raspberrypi.com/products/raspberry-pi-pico/" target="_blank">Raspberry Pico!</a> or any micro controller with access to serial/UART
-2. <a href="https://www.digikey.com/en/products/detail/bud-industries/CU-389-MB/439256" target="_blank">Encloure</a> or similar item
+2. <a href="https://www.digikey.com/en/products/detail/bud-industries/CU-389-MB/439256" target="_blank">Enclosure</a> or similar item
 3. <a href="https://www.amazon.com/gp/product/B083QMF2J1" target="_blank">Latching Light Up Buttons</a>  or any buttons 
 4. <a href="https://www.newark.com/stmicroelectronics/uln2803a/darlington-transistor-array-npn/dp/89K1143" target="_blank">ULN2803A DARLINGTON TRANSISTOR ARRAY, NPN, 8, 50V, DIP</a>  or similar Darlington array(a smaller array will work)
 5. <a href="https://www.amazon.com/dp/B01MYTE1XR" target="_blank">HC-12 433Mhz</a> or similar HC-12 433Mhz module.
 
 ### Control Box 
-1. <a href="https://store-usa.arduino.cc/products/arduino-mega-2560-rev3?selectedStore=us" target="_blank">Arduino Mega 2560</a> or any micro controller with access to serial/uart. Even a pico can work here. 
+1. <a href="https://store-usa.arduino.cc/products/arduino-mega-2560-rev3?selectedStore=us" target="_blank">Arduino Mega 2560</a> or any micro controller with access to serial/UART. Even a Pico can work here. 
 2. <a href="https://www.amazon.com/dp/B01MYTE1XR" target="_blank"> HC-12 433Mhz</a> or similar HC-12 433Mhz module.
 3. <a href="https://www.digikey.com/en/products/detail/bud-industries/AN-1307-A/5804544" target="_blank"> Enclosure</a>  or similar item
 4. Harness/Valve Connectors: <a href="https://www.digikey.com/en/products/detail/phoenix-contact/1771282/3605936" target="_blank"> M-Socket</a> and <a href="https://www.digikey.com/en/products/detail/phoenix-contact/1789203/5189404" target="_blank"> F-Header</a> 
 5. Power Connectors: <a href="https://www.digikey.com/en/products/detail/phoenix-contact/1714977/2527925" target="_blank"> M-Socket</a> and <a href="https://www.digikey.com/en/products/detail/phoenix-contact/1727566/3596865" target="_blank"> F-Header</a> 
-
 6. <a href="https://www.amazon.com/dp/B07KQH5GXL?psc=1&ref=ppx_yo2ov_dt_b_product_details" target="_blank"> Power Cord</a> or similar 24v AC power adapter. The same cord from sprinkler controllers can be used here
 7. <a href="https://www.amazon.com/dp/B0057OC5O8" target="_blank"> 4 Channel Relay Board</a>  or similar. A larger relay board may be used to control more stations
 8.  <a href="https://www.newark.com/tenma/76-1646/banana-plug-4mm-36a-screw-red/dp/01AC7888" target="_blank"> Banana Plug</a> or similar, used for the alligator clips.
@@ -37,11 +36,8 @@ Many of the existing solutions are expensive, locked to a system and quite buggy
 
 ### Misc Items:
 1. <a href="https://www.wago.com/us/discover-wire-and-splicing-connectors/221" target="_blank">Wago 221 Lever Connectors</a> used to make easier connections 
-
 2. <a href="https://www.newark.com/knipex/97-99-905/connector-kit-terminal-splice/dp/57AC5016" target="_blank">Ferrule Connectors</a> used for stranded wires
-
 3. <a href="https://www.amazon.com/dp/B08DY3QB7T?psc=1&ref=ppx_yo2ov_dt_b_product_details" target="_blank">22AWG Solid Copper Wires</a>  used for inner connections 
-
 4. <a href="https://www.amazon.com/BNTECHGO-Flexible-Silicone-Resistant-Electronic/dp/B06Y5JSZR3" target="_blank">18AWG Silicone Wires</a> used for the alligator clips. Solid wire can be used but silicone wire is more flexible 
 
 ## **The Setup**
@@ -50,14 +46,14 @@ Many of the existing solutions are expensive, locked to a system and quite buggy
 ## Remote 
 
 ### <ins>2803a Darlington Transistor Array and Button Lights Setup </ins>
-For the buttons used, there are 12v LED lights that can be attached to the darlington transistor array since the picos GPIO doesn't provide enough power. 
+For the buttons used, there are 12v LED lights that can be attached to the Darlington transistor array since the Pico's GPIO doesn't provide enough power. 
 
-The circuit is shown below. Connect the Picos GPIO Pin 6 to In 1 of the transistor array, GPIO Pin 7 to In 2, GPIO Pin 8 to In 3, GPIO Pin 9 to In 4 and ground to ground. From the out, set the Out 1 to the first buttons ground, Out 2 to second buttons ground, Out 3 to the third buttons ground and out 4 to the fourth buttons ground. 
+The circuit is shown below. Connect the Pico's GPIO Pin 6 to In 1 of the transistor array, GPIO Pin 7 to In 2, GPIO Pin 8 to In 3, GPIO Pin 9 to In 4 and ground to ground. From the out, set the Out 1 to the first buttons ground, Out 2 to second buttons ground, Out 3 to the third buttons ground and out 4 to the fourth buttons ground. 
 | ![Optional Lighting Array](images/circuits/button-transistor-array-setup.png) | 
 |:--:| 
-| *Optional lighting setup with darlington array.* |
+| *Optional lighting setup with Darlington array.* |
 
-As seen below, on the buttons LED lights, connect the Out 1 from the Darlington array to the ground cable of button LED one, Out 2 to the second buttons LED ground cable, Out 3 to the third buttons LED ground cable and Out 4 to the fourth buttons LED ground. Now, connect all LED power cables to a 5-12v DC source. In this project, all power cables were connected with a Wago 221 5 terminal block connected to a stripped USB cable providing 5v power. 
+As seen below, on the buttons LED lights, connect the Out 1 from the Darlington array to the ground cable of button LED one, Out 2 to the second buttons LED ground cable, Out 3 to the third buttons LED ground cable and Out 4 to the fourth buttons LED ground. Now, connect all LED power cables to a 5-12v DC source. In this project, all power cables were connected with a w Wago 5 terminal block connected to a stripped USB cable providing 5v power. 
 
 | ![Optional Lighting LEDs](images/circuits/button-lights-setup.png) | 
 |:--:| 
@@ -115,7 +111,7 @@ As such, connect the power wire to Relay 1's NO terminal and connect the output 
 ### <ins>HC-12 Setup</ins>
 
 
-If you're using the same HC-12 as listed above, make sure to solder headers or pins to the board. In this implementation, the HC-12 uses a software serial connection created in order to log the recieved data so the connections are a bit different than what you might expect. The TX on the HC-12 to the Digital pin 10 on the Arduino Mega, the RX on to Digital 11. Next connect ground to ground, and VCC to a 5v on the Mega. Similar to the HC-12 on the remote side, leave the Set pin disconnected unless you're performing AT commands. Lastly, connect the provided antenna to the header on the HC-12 module or connect an IPEX-to-BNC antenna on the provided connector. 
+If you're using the same HC-12 as listed above, make sure to solder headers or pins to the board. In this implementation, the HC-12 uses a software serial connection created in order to log the received data so the connections are a bit different than what you might expect. The TX on the HC-12 to the Digital pin 10 on the Arduino Mega, the RX on to Digital 11. Next connect ground to ground, and VCC to a 5v on the Mega. Similar to the HC-12 on the remote side, leave the Set pin disconnected unless you're performing AT commands. Lastly, connect the provided antenna to the header on the HC-12 module or connect an IPEX-to-BNC antenna on the provided connector. 
 | ![HC-12 Controller Side Setup](images/circuits/hc12-controller-setup.png) | 
 |:--:| 
 | *HC-12 Controller Side Setup* |
@@ -395,25 +391,25 @@ while True:
 ```
 ## HC-12 Setup
 
-Although I did not change anything because I haven't been able to test the current design in a real world environment, here are some valuable commands on the setup for the HC-12. In order to perform AT commands for the HC-12, make sure the Set pin on the HC-12 module is connected to a ground pin on a board. The best way to do this is by setting up the Arduino Mega 2560 controller code first and then using the Arduino IDE serial communication window to send commands. To look at all the commands available, make sure to look at the [HC-12's Manual](https://www.elecrow.com/download/HC-12.pdf)
+Although I did not change anything because I haven't been able to test the current design in a real world environment, here are some valuable commands on the setup for the HC-12. In order to perform AT commands for the HC-12, make sure the Set pin on the HC-12 module is connected to a ground pin on a board. The best way to do this is by setting up the Arduino Mega 2560 controller code first and then using the Arduino IDE serial communication window to send commands. To look at all the commands available, make sure to look at the [HC-12's Manual](/images/HC-12.pdf)
 
 | Command | Response | Description |
 |:---|:---:|:---|
-| ``` AT ``` | "Ok" | Test command to make sure the  HC-12 module is in programming mode. |
-| ``` AT+B1200``` | "OK+B1200" | Changes the baud rate. The slower the  baud rate, the longer the module can  transmit.  |
-| ```AT+C020``` | "COK+C020" | Changes the channel that is used to transmit.  This is crucial if multiple modules  are in close proximity.  |
-| ```AT+FU3``` | "AT+OK" | Changes the transmission settings to a preset  group. This should not be required unless  you need transmission to be very long with only short messages being set every 1 or 2 seconds at least. |
+|```AT```| "Ok" | Test command to make sure the  HC-12 module is in programming mode. |
+|```AT+B1200```| "OK+B1200" | Changes the baud rate. The slower the  baud rate, the longer the module can  transmit.  |
+|```AT+C020```| "COK+C020" | Changes the channel that is used to transmit.  This is crucial if multiple modules  are in close proximity.  |
+|```AT+FU3```| "AT+OK" | Changes the transmission settings to a preset  group. This should not be required unless  you need transmission to be very long with only short messages being set every 1 or 2 seconds at least. |
 
 ## The Design
-|![Alt text](images/designs/stranded-wire.jpg) | 
+|![Stranded Wires](images/designs/stranded-wire.jpg) | 
 |:--:| 
 | *Stranded Wires* <br> Stranded wires I added ferrules to |
 
-|![Alt text](images/designs/ferrule-crimping-2.jpg) | 
+|![Ferrule Crimping](images/designs/ferrule-crimping-2.jpg) | 
 |:--:| 
 | *Ferrule Crimping* <br> Ferrules were crimped with a Knipex ferrule crimper. A smaller wire stripper crimper tool probably wouldn't have worked for this  |
 
-|![Alt text](images/designs/ferrule-crimped-2.jpg) | 
+|![Finished Ferrule Connector](images/designs/ferrule-crimped-2.jpg) | 
 |:--:| 
 | *Finished Ferrule Connector* <br> A finished ferrule connector. I added ferrule connectors to all the stranded wires so they could be connected to breadboards or terminal connectors. Stranded wires are okay to be used on Wago 221 connectors without a ferrule so they did not have one if they were used like that.  |
 
@@ -422,100 +418,80 @@ Although I did not change anything because I haven't been able to test the curre
 |:--:| 
 | *Banana Plugs Wiring* <br> They are needed to be connected to the alligator clips. These are screw-in allowing for easy repair and you can use them with any Alligator clips |
 
-|![Alt text](images/designs/banana-plug-finished.jpg) | 
+|![Finished Banana Plug](images/designs/banana-plug-finished.jpg) | 
 |:--:| 
 | *Finished Banana Plug* <br> The banana plug will look like the following. It just needs to be plugged into the alligator clips. These are 2mm sockets |
 
 
-
-
-
-
-
-
-
-
-|![Alt text](images/designs/controller-connector-setup.jpg) | 
+|![Controller socket holes outline](images/designs/controller-connector-setup.jpg) | 
 |:--:| 
-| *Controller socket holes* <br> Holes that needed to be made. In the end, I used a drill and a rotary tool to make the holes but something like an oscillating tool would've given better results. |
+| *Controller socket holes outline* <br> Holes that needed to be made. In the end, I used a drill and a rotary tool to make the holes but something like an oscillating tool would've given better results. |
 
-|![Alt text](images/designs/controller-connectors.jpg) | 
+|![Socket Headers](images/designs/controller-connectors.jpg) | 
 |:--:| 
 | *Socket Headers* <br> Socket headers were glued with silicone to the outside of the holes made. The common/ground wire was connected between the power and alligator clip harness. The socket headers were put into protoboards and then the wires were connected to the relay boards |
 
-|![Alt text](images/designs/controller-relayboard-wiring-power.jpg) | 
+|![Relay Board Power Wiring](images/designs/controller-relayboard-wiring-power.jpg) | 
 |:--:| 
 | *Relay Board Power Wiring* <br> The output of relay 1 is connected to NO of the other relays. They are connected using a Wago 221 5 terminal connector |
 
-|![Alt text](images/designs/controller-relayboard-wiring.jpg) | 
+|![Relay Board Wiring](images/designs/controller-relayboard-wiring.jpg) | 
 |:--:| 
 | *Relay Board Wiring* <br> The power is shared as described in the circuit section. The color wires are connected to the sockets on the protoboard |
 
-|![Alt text](images/designs/controller-relayboard-wiring-input.jpg) | 
+|![Relay Board PCB Connections](images/designs/controller-relayboard-wiring-input.jpg) | 
 |:--:| 
-| *Relay Board Connections* |
+| *Relay Board PCB Connections* |
 
-|![Alt text](images/designs/controller-2803a-wiring-3.jpg) | 
+|![2803a Wiring on Breadboard](images/designs/controller-2803a-wiring-3.jpg) | 
 |:--:| 
 | *2803a Wiring* <br> The Darlington array wired on a mini breadboard with ground shared between all devices and 5v power being shared on the breadboard |
 
-|![Alt text](images/designs/controller-wiring-2.jpg) | 
+|![Controller Complete Wiring](images/designs/controller-wiring-2.jpg) | 
 |:--:| 
 | *Controller Complete Wiring* <br> The complete wiring for the Arduino and relay board. There was still quite a bit of space inside of this housing so its possible to make it more compact or add additional stations using a larger relay board |
 
-|![Alt text](images/designs/button-progress-2.jpg) | 
+|![Remote Buttons](images/designs/button-progress-2.jpg) | 
 |:--:| 
 | *Remote Buttons* <br> Button holes made on the housing. A few scuffs on the outside but the performance is still great. The hole for the second button was a bit large but it still worked |
 
-|![Alt text](images/designs/button-progress.jpg) | 
+|![Remote Buttons Backside](images/designs/button-progress.jpg) | 
 |:--:| 
 | *Remote Buttons Backside* <br> The backside of the buttons on the remote. The blue wires are for the button functions while the black and red are the LED wirings. |
 
 
-
-
-|![Alt text](images/designs/remote-2803a.jpg) | 
+|![Remote 2803a Wiring on Breadboard](images/designs/remote-2803a.jpg) | 
 |:--:| 
 | *Remote 2803a Wiring* <br> Wiring for the 2803a and button LEDs. The button LEDs had stranded wires so I added ferrule connectors to plug them into the tiny breadboard |
 
-|![Alt text](images/designs/remote-all-wiring.jpg) | 
+|![Remote Complete Wiring](images/designs/remote-all-wiring.jpg) | 
 |:--:| 
 |  *Remote Complete Wiring* <br> All of the wiring for the Pico. The HC12 is glued at the top with the antenna probing outside of the box. The grounds and power are all connected  in Wago terminals connectors. The 2803a is set on a tiny breadboard. The fit was very tight but everything fit together|
 
-
-
-
-
-
-
-
-
-
-
-## Finished Products 
+## Finished Product
 
 | ![Alligator Clips ](images/de/../designs/alligator-clips.jpg) | 
 |:--:| 
 | *Alligator Clips Finished Design* <br> The common/ground alligator clip should've been a black clip but I only had red ones. |
 
-|![Alt text](images/designs/connectors.jpg) | 
+|![Finished Connectors](images/designs/connectors.jpg) | 
 |:--:| 
 | *Finished Connectors* <br> The finished male socket connectors using Phoenix Contact Term Block Plugs 2POS and 4POS Str 3.5MM. |
 
-|![Alt text](images/designs/controller-outside-top.jpg) | 
+|![Controller Top View](images/designs/controller-outside-top.jpg) | 
 |:--:| 
 | *Controller Top View* |
 
-|![Alt text](images/designs/controller-outside.jpg)| 
+|![Controller Outside View](images/designs/controller-outside.jpg)| 
 |:--:| 
 | *Controller Outside View* <br> Outside view of the controller box. The connectors are on the side of the metal box. |
 
-|![Alt text](images/designs/controller-sockets.jpg) | 
+|![Connectors](images/designs/controller-sockets.jpg) | 
 |:--:| 
 | *Connectors <br>* Connector on the outside with the power and alligator clip harness connected |
 
 
-|![Alt text](images/designs/remote-view-4.jpg) | 
+|![Remote Outside View](images/designs/remote-view-4.jpg) | 
 |:--:| 
 | *Remote Outside View* <br> The outside view of the remote housing. The buttons are on when push in and off when pushed out. There are labels on each button to give the user more information. |
 
