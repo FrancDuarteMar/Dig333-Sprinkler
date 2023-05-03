@@ -125,3 +125,278 @@ The Arduino Mega 2560 setup can be seen here. Ground is connected to the Darling
 | *Arduino Mega 2560 GPIO Setup* |
 
 
+## **Code**
+---
+
+## [Controller Setup](https://github.com/FrancDuarteMar/Dig333-Sprinkler/blob/main/control-board.ino])
+
+In order to setup the Software serial to allow logging, you need the Software Serial library available in the Arduino IDE. Next, setup a SoftwareSerial called HC12 with Pin 10 as the TX pin and Pin 11 as the RX pin. Use whatever pin in the arguments but make sure TX is first and RX is second like:  ```HC12(TX Pin,RX Pin)```
+```
+#include <SoftwareSerial.h>
+
+SoftwareSerial HC12(10, 11);  // HC-12 TX Pin, HC-12 RX Pin
+```
+
+Next, setup the various pin connectors for the Relay board activation. You can change the pin numbers to whatever you're using. These are the pins going from the Arduino to the 2803a Darlington Transistor Array In connections 
+```
+int mainPower = 22;
+int power1 = 23;
+int power2 = 24;
+int power3 = 25;
+```
+Next, the setup function contains the pin numbers used above. There should be no changes needed unless you change the baud rate with AT commands on the HC-12 modules. The default is 9600 as seen in the code below. You can modify it to your corresponding serial baud rate by changing the code as follows: ```HC12.begin(*baud_rate*)```. The rest of the code should stay the same unless you make changes. It is meant to work with whatever values you set above for the mainPower and power1,2, and 3 variables. 
+```
+void setup() {
+  Serial.begin(9600);  // Serial port to computer
+  HC12.begin(9600);    // Serial port to HC12
+  pinMode(mainPower, OUTPUT);
+  digitalWrite(mainPower, LOW);
+  pinMode(power1, OUTPUT);
+  digitalWrite(power1, LOW);
+  pinMode(power2, OUTPUT);
+  digitalWrite(power2, LOW);
+  pinMode(power3, OUTPUT);
+  digitalWrite(power3, LOW);
+}
+```
+
+The last part of the code is simply a toggle on/off for each valve as data is received that dictates which valve to toggle on and off. This can be improved to make sure on/off corresponds to the on/off of the button but I wanted to keep it as simple as possible so transmission can be as long as possible. A simple idea can be to add a 0/1 to the end of the message but it will only work with valves 0-9. The data received must also be ended with an EOS character as that is what the code looks for but it can be easily changed by substituting ```'\n``` with the desired character in the following line ```String data = HC12.readStringUntil('\n');```. Some last notes about this code, in order to read data being recieved, you must check if ```HC12.available()>0``` because it gives you the data that is available in the HC12 modules. Reading the HC12 module must also be done by calling the HC12 module while printing data to the Serial Communication port must be done by calling the normal ```Serial.println();``` command. You can do most of the same commands for the Software Serial ```HC12``` as you can with the ```Serial``` library.
+
+
+```
+void loop() {
+  while (HC12.available() > 0) {
+    String data = HC12.readStringUntil('\n');
+
+    if (data == "1") {
+      Serial.println("Open 1");
+      digitalWrite(mainPower, !digitalRead(mainPower));
+      Serial.print("Current Status for pin 22 aka main power: ");
+      Serial.println(digitalRead(mainPower));
+    }
+    if (data == "2") {
+      Serial.println("Open 2");
+      digitalWrite(power1,!digitalRead(power1));
+      Serial.print("Current Status for pin 23 aka Power 1: ");
+      Serial.println(digitalRead(power1));
+    }
+    if (data == "3") {
+      Serial.println("Open 3");
+      digitalWrite(power2,!digitalRead(power2));
+      Serial.print("Current Status for pin 24 aka Power 2: ");
+      Serial.println(digitalRead(power2));
+    }
+    if (data == "4") {
+      Serial.println("Open 4");
+      digitalWrite(power3,!digitalRead(power3));
+      Serial.print("Current Status for pin 25 aka Power 3: ");
+      Serial.println(digitalRead(power3));
+    }
+    Serial.println(data);
+    
+  }
+
+}
+```
+The following is the full code for the Arduino Mega 2560. It was loaded onto the board so that it runs on startup. 
+
+```
+#include <SoftwareSerial.h>
+
+SoftwareSerial HC12(10, 11);  // HC-12 TX Pin, HC-12 RX Pin
+
+int incByte = 0;
+char text[4] = "";
+int mainPower = 22;
+int power1 = 23;
+int power2 = 24;
+int power3 = 25;
+
+void setup() {
+  Serial.begin(9600);  // Serial port to computer
+  HC12.begin(9600);    // Serial port to HC12
+  pinMode(mainPower, OUTPUT);
+  digitalWrite(mainPower, LOW);
+  pinMode(power1, OUTPUT);
+  digitalWrite(power1, LOW);
+  pinMode(power2, OUTPUT);
+  digitalWrite(power2, LOW);
+  pinMode(power3, OUTPUT);
+  digitalWrite(power3, LOW);
+}
+
+void loop() {
+  while (HC12.available() > 0) {
+    String data = HC12.readStringUntil('\n');
+
+    if (data == "1") {
+      Serial.println("Open 1");
+      digitalWrite(mainPower, !digitalRead(mainPower));
+      Serial.print("Current Status for pin 22 aka main power: ");
+      Serial.println(digitalRead(mainPower));
+    }
+    if (data == "2") {
+      Serial.println("Open 2");
+      digitalWrite(power1,!digitalRead(power1));
+      Serial.print("Current Status for pin 23 aka Power 1: ");
+      Serial.println(digitalRead(power1));
+    }
+    if (data == "3") {
+      Serial.println("Open 3");
+      digitalWrite(power2,!digitalRead(power2));
+      Serial.print("Current Status for pin 24 aka Power 2: ");
+      Serial.println(digitalRead(power2));
+    }
+    if (data == "4") {
+      Serial.println("Open 4");
+      digitalWrite(power3,!digitalRead(power3));
+      Serial.print("Current Status for pin 25 aka Power 3: ");
+      Serial.println(digitalRead(power3));
+    }
+    Serial.println(data);
+  }
+}
+```
+
+## [Remote Code](https://github.com/FrancDuarteMar/Dig333-Sprinkler/blob/main/main.py)
+The Raspberry Pico's code is very simple similar to the controller code. 
+ If you're using a Raspberry Pi board that uses MicroPython or CircuitPython, this code should work but if you're using the full version of python, you will need to update the GPIO usage and UART with the respective code as well as enabling UART in the raspi-config. First, being by importing the required libraries.
+```
+from machine import UART
+import time
+from machine import Pin
+```
+
+Next setup UART to the configured baud rate for the HC12 module. The default is 9600 but you can change it as seen in the HC-12 Setup below. 
+
+```
+uart = UART(0,9600,timeout=400)
+```
+
+Next, the buttons and button lights are setup below to be used later on. The button numbers correspond to the GPIO used so make sure that you have the same or change it to what you're using. The button lights GPIO numbers are what is connected to the 2803a Darlington transistor array In connections. Make sure they're the same as yours or you have updated the values to match your own.
+
+```
+button1 = Pin(2, Pin.IN,Pin.PULL_UP)
+button2 = Pin(3, Pin.IN,Pin.PULL_UP)
+button3 = Pin(4, Pin.IN,Pin.PULL_UP)
+button4 = Pin(5, Pin.IN,Pin.PULL_UP)
+
+buttonLight1 = Pin(6,Pin.OUT)
+buttonLight2 = Pin(7,Pin.OUT)
+buttonLight3 = Pin(8,Pin.OUT)
+buttonLight4 = Pin(9,Pin.OUT)
+```
+
+Next, in order to make the system a toggle, it needs to keep track of the previous state of the button as seen below. There should be no changes necessary. 
+
+```
+prevState1 = button1.value()
+prevState2 = button2.value()
+prevState3 = button3.value()
+prevState4 = button4.value()
+```
+
+The following is the body of the code that is used. You can keep the code the same if you didn't make changes to the controller but if you updated the code to a more robust implementation, you need to change the ```uart.write()``` line. Lastly, the ```time.sleep()``` line also affects the response time of the buttons. With a low sleep time of .05, even touching the button toggled the valve on and off. This may be due to the style of the buttons but I suspect that is has to do with how fast the code updates. If you know you wont be changing status quickly, you can up the time to a second or two. 
+
+```
+while True:
+
+    but1State = button1.value()
+    but2State = button2.value()
+    but3State = button3.value()
+    but4State = button4.value()
+
+    if but1State != prevState1:
+        print("Button 1 Pressed!")
+        prevState1 = but1State
+        uart.write(str("1")+"\n")
+        buttonLight1.value(not but1State)
+        
+    if but2State != prevState2:
+        print("Button 2 Pressed!")
+        prevState2 = but2State
+        uart.write(str("2")+"\n")
+        buttonLight2.value(not but2State)
+
+    if but3State != prevState3:
+        print("Button 3 Pressed!")
+        prevState3 = but3State
+        uart.write(str("3")+"\n")
+        buttonLight3.value(not but3State)
+
+    if but4State != prevState4:
+        print("Button 4 Pressed!")
+        prevState4 = but4State
+        uart.write(str("4")+"\n")
+        buttonLight4.value(not but4State)
+    
+    time.sleep(0.25)
+```
+
+Finally, the full code for the pico is the following. The code was loaded onto the picos memory and saved as ```main.py``` so that it runs on start up.  
+```
+from machine import UART
+import time
+from machine import Pin
+
+uart = UART(0,9600,timeout=400)
+
+button1 = Pin(2, Pin.IN,Pin.PULL_UP)
+button2 = Pin(3, Pin.IN,Pin.PULL_UP)
+button3 = Pin(4, Pin.IN,Pin.PULL_UP)
+button4 = Pin(5, Pin.IN,Pin.PULL_UP)
+
+buttonLight1 = Pin(6,Pin.OUT)
+buttonLight2 = Pin(7,Pin.OUT)
+buttonLight3 = Pin(8,Pin.OUT)
+buttonLight4 = Pin(9,Pin.OUT)
+
+prevState1 = button1.value()
+prevState2 = button2.value()
+prevState3 = button3.value()
+prevState4 = button4.value()
+
+while True:
+
+    but1State = button1.value()
+    but2State = button2.value()
+    but3State = button3.value()
+    but4State = button4.value()
+
+    if but1State != prevState1:
+        print("Button 1 Pressed!")
+        prevState1 = but1State
+        uart.write(str("1")+"\n")
+        buttonLight1.value(not but1State)
+        
+    if but2State != prevState2:
+        print("Button 2 Pressed!")
+        prevState2 = but2State
+        uart.write(str("2")+"\n")
+        buttonLight2.value(not but2State)
+
+    if but3State != prevState3:
+        print("Button 3 Pressed!")
+        prevState3 = but3State
+        uart.write(str("3")+"\n")
+        buttonLight3.value(not but3State)
+
+    if but4State != prevState4:
+        print("Button 4 Pressed!")
+        prevState4 = but4State
+        uart.write(str("4")+"\n")
+        buttonLight4.value(not but4State)
+
+    time.sleep(0.25)
+```
+## HC-12 Setup
+
+Although I did not change anything because I haven't been able to test the current design in a real world environment, here are some valuable commands on the setup for the HC-12. In order to perform AT commands for the HC-12, make sure the Set pin on the HC-12 module is connected to a ground pin on a board. The best way to do this is by setting up the Arduino Mega 2560 controller code first and then using the Arduino IDE serial communication window to send commands. To look at all the commands available, make sure to look at the [HC-12's Manual](https://www.elecrow.com/download/HC-12.pdf)
+
+| Command | Response | Description |
+|:---|:---:|:---|
+| ``` AT ``` | "Ok" | Test command to make sure the  HC-12 module is in programming mode. |
+| ``` AT+B1200``` | "OK+B1200" | Changes the baud rate. The slower the  baud rate, the longer the module can  transmit.  |
+| ```AT+C020``` | "COK+C020" | Changes the channel that is used to transmit.  This is crucial if multiple modules  are in close proximity.  |
+| ```AT+FU3``` | "AT+OK" | Changes the transmission settings to a preset  group. This should not be required unless  you need transmission to be very long with only short messages being set every 1 or 2 seconds at least. |
+
